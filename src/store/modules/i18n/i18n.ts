@@ -1,4 +1,4 @@
-import { AppThunk } from "../../store";
+import { AppThunk } from "../..";
 import { apiList } from "../../ActionNames";
 import initDispatchTypes from "../../helper/default-action-type";
 import { Dispatch } from "redux";

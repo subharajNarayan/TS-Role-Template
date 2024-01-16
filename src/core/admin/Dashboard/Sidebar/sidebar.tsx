@@ -2,13 +2,7 @@ import React from 'react';
 import { HomeIcon, Dashboard, Form, List, AboutIcon, Pagination, Checkbox, Carousel } from '../../../../assets/images/xd';
 import { Link, NavLink } from 'react-router-dom';
 import { UncontrolledCollapse } from 'reactstrap';
-// import { NavLink } from 'reactstrap';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
 import topLogo from '../../../../assets/images/fav.png';
-// import { AppSidebarNav } from './sideNavBar';
-// import SimpleBar from 'simplebar-react';
-// import navigation from './nav';
 
 interface Props {
   sidebarToggle: boolean;
@@ -29,47 +23,18 @@ const AppSidebar = (props: Props) => {
       icon: HomeIcon,
     },
     {
-      name: "About",
-      title: "About us",
-      link: "/admin/about",
-      icon: AboutIcon
-    },
-    {
       name: "Components",
       title: "Components",
       link: "",
       icon: Dashboard,
       children: [
-        {
-          name: "Form",
-          title: 'Form',
-          link: "/admin/form",
-          icon: Form,
-        },
-        {
-          name: "List",
-          title: 'List',
-          link: "/admin/list",
-          icon: List,
-        },
-        {
-          name: "Pagination",
-          title: 'Pagination',
-          link: "/admin/pagination",
-          icon: Pagination,
-        },
-        {
-          name: "Checkbox",
-          title: 'Checkbox',
-          link: "/admin/checkbox",
-          icon: Checkbox,
-        },
-        {
-          name: "Carousel",
-          title: 'Carousel',
-          link: "/admin/carousel",
-          icon: Carousel,
-        },
+        // {
+        //   name: "Form",
+        //   title: 'Form',
+        //   link: "/admin/form",
+        //   icon: Form,
+        // },
+        
       ]
     },
   ]
@@ -89,11 +54,11 @@ const AppSidebar = (props: Props) => {
   return (
 
     <aside className="sidebar">
-      <div className="py-3">
+      <div className="py-3 mt-2">
         <div className='sidebar-header-top align-vertical px-3'>
           <div>
-            {/* <h6 className='sidebar-text text-center text-uppercase font-bold'>Dashboard</h6> */}
-            <img src={topLogo} alt="" width="27" />
+            <h6 className='sidebar-text text-center text-uppercase font-bold'>Quick Book</h6>
+            {/* <img src={topLogo} alt="" width="27" /> */}
           </div>
           <div role='button' className="toggler-close" onClick={togglesidebar}>
             <i className='ic-close'></i>
@@ -120,7 +85,7 @@ const AppSidebar = (props: Props) => {
                     toggler={`#${item.name}`}
                     className="ml-3 mr-1 menu__collapsable-sub collapse"
                   >
-                    {item.children.map((subitem) => (
+                    {/* {item.children.map((subitem) => (
                       <Link
                         to={subitem.link}
                         className={`${window.location.href?.includes(subitem.link) ? "active" : ""
@@ -128,7 +93,7 @@ const AppSidebar = (props: Props) => {
                       >
                         <img src={subitem.icon} alt="" className="menu_icon" /> {subitem.title}
                       </Link>
-                    ))}
+                    ))} */}
                   </UncontrolledCollapse>
                 </li>
               </React.Fragment>

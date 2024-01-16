@@ -14,10 +14,6 @@ export const appReducer = combineReducers({
     registerData: registerReducer,
     outhService:outhReducer,
     userDetails,
-    // addUserDetailsGoogle
-    // outhService: outhReducer,
-    // schemeName,
-    // userDetails,
     
 });
 

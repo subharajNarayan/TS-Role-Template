@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 
 import {apiList} from "../../ActionNames"
-import { AppThunk } from "../../store";
+import { AppThunk } from "../..";
 import initDefaultAction, { APIResponseDetail } from "../../helper/default-action";
 import initDefaultReducer from "../../helper/default-reducer";
 import initialState from "../../helper/default-state";

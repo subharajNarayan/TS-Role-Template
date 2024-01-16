@@ -8,12 +8,8 @@ import AppHeader from './Header/Header'
 import Sidebar from './Sidebar/sidebar'
 import AppFooter from './Footer/footer'
 import "../../../assets/dashboard/scss/style.scss"
-import FallbackLoader from '../../../components/React/FallBackLoader/FallBackLoader'
-import Home from '../../public/Home/Home'
+import FallbackLoader from '../../../components/React/FallBackLoader/FallBackLoader';
 import { useNavigate } from 'react-router-dom';
-import Form from '../pages/form/Form';
-import List from '../pages/list/List';
-import Pagination from '../pages/pagination/Pagination';
 import appRoutes from "../../../routes/routes";
 
 interface Props extends PropsFromRedux {
@@ -26,9 +22,6 @@ function Dashboard(props: Props): ReactElement {
   const navigate = useNavigate;
   const { isAuthenticated } = useAuthentication();
 
-  // console.log({props});
-  // console.log({children});
-  
 
   return (
     <Suspense fallback={<FallbackLoader />}>
@@ -41,9 +34,9 @@ function Dashboard(props: Props): ReactElement {
           <AppHeader sidebarToggle={sidebarToggle} setsidebarToggle={setsidebarToggle} />
           <div className="body flex-grow-1 px-3">
 
-          <PrivateRoute
-          appRoutes={appRoutes.filter((route) => route.type !== "login")}
-        />
+            <PrivateRoute
+              appRoutes={appRoutes.filter((route) => route.type !== "login")}
+            />
           </div>
           <AppFooter />
         </main>

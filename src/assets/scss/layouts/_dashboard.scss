@@ -13,7 +13,8 @@
                     .list {
                         &-sidebar {
                             a {
-                                color: lighten($value, 50);
+                                // color: lighten($value, 10);
+                                color: rgba(44, 56, 74, 0.95);
                                 &.active {
                                     // background-color: lighten($value, 50);
                                     color: $value;

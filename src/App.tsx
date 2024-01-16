@@ -12,13 +12,6 @@ import {useLocation} from "react-router-dom";
 import Dashboard from "./core/protected/Dashboard/dashboard";
 import AdminDashboard from "./core/admin/Dashboard/dashboard";
 
-// import toast from "./components/Notifier/Notifier";
-// import { useDispatch, useSelector } from "react-redux";
-// import {addUserDetails} from "./store/modules/userDetails";
-// import { geti18nLanguage, switchI18nLanguage } from "./store/modules/i18n/i18n";
-// Initialize Notification Toaster
-
-
 function App() {
   const {
     i18nextData: { languageType },
@@ -61,12 +54,14 @@ function App() {
 
   useEffect(() => {
     const userDetails = tok;
-    setIsRole('');
+    // setIsRole('');
     
-    if (userDetails?.role === "admin") {
+    if (userDetails?.role?.toLowerCase() === "admin") {
       setIsRole("ADMIN")
-    } else if (userDetails?.role === "moderator") {
-      setIsRole("Moderator")
+    } else if (userDetails?.role?.toLowerCase() === "team_member") {
+      setIsRole("Team_Member")
+    } else {
+      setIsRole("")
     }
   }, [tok?.role]);
 

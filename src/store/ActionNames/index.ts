@@ -43,7 +43,8 @@ export enum RequestMethod {
     },
     oauth: {
       login: {
-        controllerName: "api/signin/",
+        // controllerName: "api/signin/",
+        controllerName: "/api/login/",
         actionName: "LOGIN",
         requestMethod: RequestMethod.POST,
         requestBodyType: RequestBodyType.NOAUTH
@@ -59,11 +60,6 @@ export enum RequestMethod {
         actionName: "INIT",
         requestMethod: RequestMethod.GET
       },
-      autosearch:{
-        controllerName:"/api/v1/search_animal/",
-        actionName:"AUTOSEARCH",
-        requestMethod: RequestMethod.GET
-      }
     },
 }
 

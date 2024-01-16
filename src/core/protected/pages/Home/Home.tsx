@@ -1,9 +1,29 @@
-import React from 'react'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { logoutAction } from '../../../../store/root-reducer';
+import useAuthentication from '../../../../services/authentication/AuthService';
 
-const Home = () => {
+const ProtectedHome = () => {
+
+  const { getAuthUser } = useAuthentication();
+  const user = getAuthUser();
+
+  const dispatch = useDispatch()
+
+  const LogOutAction = () => {
+    dispatch(logoutAction())
+  }
+
+  React.useEffect(() => {
+    if (user.role && user.role.toLowerCase() !== 'team_member') {
+      LogOutAction();
+      window.location.reload();
+    }
+  }, [])
+
   return (
     <div>Protected Home</div>
   )
 }
 
-export default Home
+export default ProtectedHome;
