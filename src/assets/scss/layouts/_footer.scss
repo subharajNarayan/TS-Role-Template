@@ -1,9 +1,15 @@
 .stickyHeader{
-  .footer{
+  footer{
+    padding: 0.7rem 1rem;
+    background-color: #ebedef;
     .nav{
       .nav-item{
         .nav-link{
-          padding: 6.5px 0px !important;
+          padding: 6.5px 5px !important;
+          color: #2C384AF2 !important;
+          &:hover{
+            color: #1071e5 !important;
+          }
         }
       }
     }

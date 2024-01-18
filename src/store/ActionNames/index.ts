@@ -43,8 +43,8 @@ export enum RequestMethod {
     },
     oauth: {
       login: {
-        // controllerName: "api/signin/",
-        controllerName: "/api/login/",
+        controllerName: "api/signin/",
+        // controllerName: "/api/login/",
         actionName: "LOGIN",
         requestMethod: RequestMethod.POST,
         requestBodyType: RequestBodyType.NOAUTH
@@ -59,6 +59,32 @@ export enum RequestMethod {
         controllerName: "/oauth/user/init/data",
         actionName: "INIT",
         requestMethod: RequestMethod.GET
+      },
+    },
+    FormLog: {
+      postTaskLogs: {
+        controllerName: "/api/tasks/",
+        actionName: "POST_TASK",
+        requestMethod: RequestMethod.POST,
+        requrestBodyType: RequestBodyType.AUTH
+      },
+      getTaskLogs: {
+        controllerName: "/api/tasks/",
+        actionName: "GET_TASK",
+        requestMethod: RequestMethod.GET,
+        requestBodyType: RequestBodyType.AUTH
+      },
+      updateTaskLogs: {
+        controllerName: "/api/tasks/{id}",
+        actionName: "UPDATE_TASK",
+        requestMethod: RequestMethod.PUT,
+        requestBodyType: RequestBodyType.AUTH
+      },
+      deleteTaskLogs: {
+        controllerName: "/api/tasks/{id}",
+        actionName: "DELETE_TASK",
+        requestMethod: RequestMethod.DELETE,
+        requestBodyType: RequestBodyType.AUTH
       },
     },
 }

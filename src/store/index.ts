@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose, Action } from 'redux';
-import thunk, { ThunkAction } from 'redux-thunk';
+import {thunk, ThunkAction } from 'redux-thunk';
 
 import rootReducer, { RootState } from "./root-reducer";
 

@@ -2,7 +2,7 @@ import Button from "../../../components/UI/Forms/Buttons";
 import { useFormik } from "formik";
 import React, { ReactElement, useCallback, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../../store/modules/login/login";
 import { addUserDetails } from "../../../store/modules/userDetails";
 import { RootState } from "../../../store/root-reducer";
@@ -10,8 +10,7 @@ import { object as YupObject, string as YupString } from "yup";
 import '../login/login.scss';
 import '../authSocial/social.scss';
 import toast from "../../../components/Notifier/Notifier";
-import TokenService from "../../../services/jwt-token/jwt-token";
-// import { useGoogleLogin } from '@react-oauth/google';
+// import TokenService from "../../../services/jwt-token/jwt-token";
 import FormikValidationError from "../../../components/React/FormikValidationError/FormikValidationError";
 
 interface Props extends PropsFromRedux { }
@@ -22,10 +21,10 @@ export interface UserCredentials {
 
 function Login(props: Props): ReactElement {
   const history = useNavigate();
-  const { loginData, loginUser } = props;
+  const { loginUser } = props;
   // const i18nextData = useSelector((state: RootState) => state.i18nextData, shallowEqual);
 
-  const [ isLoader, setIsLoader ] = useState(false);
+  const [isLoader, setIsLoader] = useState(false);
 
   const handleLogin = useCallback(
     async (userDetails: UserCredentials) => {
@@ -33,12 +32,12 @@ function Login(props: Props): ReactElement {
         setIsLoader(true); // Set loader to true when initiating login
         const loginres: any = await loginUser(userDetails);
         console.log("loginres", loginres);
-        
+
 
         if (loginres?.data?.access) {
           props.addUserDetails(loginres.data);
           console.log({ d: loginres.data });
-          if (loginres?.data?.role === "Admin") {
+          if (loginres?.data?.role === "admin") {
             history("/admin/home");
           } else {
             history("/auth/home");
@@ -50,17 +49,17 @@ function Login(props: Props): ReactElement {
 
           if (loginres?.status === 401) {
             // Display a more user-friendly message for failed authentication
-            toast.error("password doesn't match");
-          } else if(loginres?.status === 404) {
-            toast.error ("username doesn't match")
-          }else{
+            const wrongPassword = loginres?.message?.error;
+            toast.error(wrongPassword);
+            // toast.error("password doesn't match");
+          } else {
             // Display other error messages or a generic server error
             toast.error(loginres?.data?.message || "Server Error");
           }
         }
       } catch (error) {
         toast.error("Server is taking too long to respond, please try again in sometime!");
-      }finally{
+      } finally {
         setIsLoader(false)
       }
     },
@@ -117,7 +116,7 @@ const LoginForm = ({ authorizing, handleLogin }: LoginFormProps) => {
     },
   });
 
-  const history = useNavigate();
+  // const history = useNavigate();
 
   return (
     <div className="auth-body">
@@ -174,6 +173,11 @@ const LoginForm = ({ authorizing, handleLogin }: LoginFormProps) => {
           </div>
         </div>
       </form>
+      <div className="auth-signup">
+        <p className="align-vertical">Dont't have an account? &nbsp;
+          <Link to="/signup">SIGN UP</Link>
+        </p>
+      </div>
     </div>
   );
 };

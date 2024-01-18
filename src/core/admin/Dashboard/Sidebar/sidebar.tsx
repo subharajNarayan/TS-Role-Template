@@ -2,7 +2,6 @@ import React from 'react';
 import { HomeIcon, Dashboard, Form, List, AboutIcon, Pagination, Checkbox, Carousel } from '../../../../assets/images/xd';
 import { Link, NavLink } from 'react-router-dom';
 import { UncontrolledCollapse } from 'reactstrap';
-import topLogo from '../../../../assets/images/fav.png';
 
 interface Props {
   sidebarToggle: boolean;
@@ -28,13 +27,12 @@ const AppSidebar = (props: Props) => {
       link: "",
       icon: Dashboard,
       children: [
-        // {
-        //   name: "Form",
-        //   title: 'Form',
-        //   link: "/admin/form",
-        //   icon: Form,
-        // },
-        
+        {
+          name: "Form",
+          title: 'Form',
+          link: "/admin/form",
+          icon: Form,
+        },
       ]
     },
   ]
@@ -85,7 +83,7 @@ const AppSidebar = (props: Props) => {
                     toggler={`#${item.name}`}
                     className="ml-3 mr-1 menu__collapsable-sub collapse"
                   >
-                    {/* {item.children.map((subitem) => (
+                    {item.children.map((subitem) => (
                       <Link
                         to={subitem.link}
                         className={`${window.location.href?.includes(subitem.link) ? "active" : ""
@@ -93,7 +91,7 @@ const AppSidebar = (props: Props) => {
                       >
                         <img src={subitem.icon} alt="" className="menu_icon" /> {subitem.title}
                       </Link>
-                    ))} */}
+                    ))}
                   </UncontrolledCollapse>
                 </li>
               </React.Fragment>

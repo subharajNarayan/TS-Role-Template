@@ -1,4 +1,4 @@
-import Axios, { AxiosRequestConfig, AxiosResponse, CancelTokenSource, Method } from 'axios';
+import Axios, { AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse, CancelTokenSource, Method } from 'axios';
 import initDispatchTypes from './default-action-type';
 import initApiRequest from '../../services/api-request/api-request';
 import { apiDetailType } from '../ActionNames';
@@ -21,14 +21,28 @@ interface APIRequestDetail {
     disableToast?: boolean;
 }
 
-interface CustomResponse<TData = any> extends AxiosResponse {
+// interface CustomResponse<TData = any> extends AxiosResponse<TData> {
+//     message: string;
+//     data: TData | null;
+//     status: number;
+//     noconnection: boolean;
+//     config: AxiosRequestConfig;
+//     isAxiosError: boolean;
+//     headers: AxiosRequestHeaders;
+// }
+
+interface CustomResponse<TData = any>  { //update axios response
     message: string;
     data: TData | null;
     status: number;
     noconnection: boolean;
     config: AxiosRequestConfig;
     isAxiosError: boolean;
+    headers: AxiosRequestHeaders;
+    cancelSource?: CancelTokenSource;
+    noServerConnection?: boolean;
 }
+
 
 export type APIResponseDetail<TData = any> = Promise<CustomResponse<TData>>
 
@@ -38,7 +52,7 @@ let noConnectionLanguageCount = 0;
 const axiosCancelSource = Axios.CancelToken.source();
 
 const handleError = (responseData: CustomResponse, dispatchTypes: any, disableFailureToast: boolean, disableToast: boolean) => {
-    
+
     // const dispatch = useDispatch();
     // Failure Dispatch
     dispatch({ type: dispatchTypes.failureDispatch, payload: responseData.data });
@@ -94,37 +108,37 @@ export default async function initDefaultAction(apiDetails: apiDetailType, dispa
 
     try {
         responseData = await initApiRequest(sanitizedApiDetails, requestData, requestMethod || sanitizedApiDetails.requestMethod || "GET", params, cancelSource || axiosCancelSource);
-    
+
         // Check if responseData and responseData.data exist
         if (responseData && responseData.data) {
-          console.log(responseData.data, "responseData");
-    
-          // Success Dispatch
-          dispatch({ type: dispatchTypes.successDispatch, payload: responseData.data });
-    
-          if (!(disableSuccessToast || disableToast)) {
-            if (requestMethod !== "GET") {
-              SuccessToast(responseData.data?.message);
+            console.log(responseData.data, "responseData");
+
+            // Success Dispatch
+            dispatch({ type: dispatchTypes.successDispatch, payload: responseData.data });
+
+            if (!(disableSuccessToast || disableToast)) {
+                if (requestMethod !== "GET") {
+                    SuccessToast(responseData.data?.message);
+                }
             }
-          }
         } else {
-          console.error('Invalid API response structure:', responseData);
-          // Handle the error appropriately
+            console.error('Invalid API response structure:', responseData);
+            // Handle the error appropriately
         }
-      } catch (customThrownError) {
+    } catch (customThrownError) {
         responseData = customThrownError;
-    
+
         // Check if responseData and responseData.data exist
         if (responseData && responseData.data) {
-          handleError(responseData, dispatchTypes, disableFailureToast || disableToast, disableToast);
+            handleError(responseData, dispatchTypes, disableFailureToast || disableToast, disableToast);
         } else {
-          console.error('Invalid API response structure:', responseData);
-          // Handle the error appropriately
+            console.error('Invalid API response structure:', responseData);
+            // Handle the error appropriately
         }
-      }
-    
-      return responseData as APIResponseDetail | Promise<any>;
     }
+
+    return responseData as APIResponseDetail | Promise<any>;
+}
 
 function sanitizeController(
     apiDetail: apiDetailType,

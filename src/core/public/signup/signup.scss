@@ -8,20 +8,19 @@
 
   &-signupbody {
     margin-top: 1rem;
-    // width: 40%;
     border: 1px solid #c7c1c1;
-    padding: 4rem 6rem;
+    padding: 2.5rem 5rem;
     box-shadow: 0px 0px 30px #A5A4BF;
-    margin-bottom: 1rem;
+    width: 500px;
     
     .auth-signupform {
-      margin: 50px auto;
+      margin: 25px auto;
     }
 
     .form-group .form-control {
       font-size: .933rem;
       height: auto;
-      padding: .56rem .8rem;
+      padding: .45rem .8rem;
       border-radius: 5px;
       color: #919191;
       border: 1px solid rgba(158,160,160,.5) !important;
@@ -50,7 +49,7 @@
         }
     }
     .form-group {
-      margin-bottom: 1.27rem;
+      margin-bottom: 0.3rem;
     }
 
 
@@ -82,10 +81,16 @@
       font-size: 18px;
       font-weight: lighter;
       font-family: 'Source Sans Pro', sans-serif;
-      margin-bottom: 25px;
+      // margin-bottom: 25px;
       color: #4D4F5C;
       line-height: 21px;
       -webkit-text-stroke: 1px #707070;
+      a{
+        &:hover{
+          text-decoration: none;
+          color: #0b4e9d;
+        }
+      }
     }
 
     h6 {

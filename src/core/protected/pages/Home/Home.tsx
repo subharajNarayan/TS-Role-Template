@@ -15,7 +15,7 @@ const ProtectedHome = () => {
   }
 
   React.useEffect(() => {
-    if (user.role && user.role.toLowerCase() !== 'team_member') {
+    if (user.role && user.role.toLowerCase() !== 'user') {
       LogOutAction();
       window.location.reload();
     }

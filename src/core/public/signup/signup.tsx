@@ -14,8 +14,7 @@ import { addUserDetails } from "../../../store/modules/userDetails";
 
 interface Props extends PropsFromRedux { }
 export interface UserRegister {
-  firstname: string;
-  lastname: string;
+  username: string;
   email: string;
   phone: string;
   password: string;
@@ -91,30 +90,9 @@ interface SignupFormProps {
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const signupValidationSchema = Yup.object().shape({
-  firstname: Yup.mixed().nullable().required("This field is required"),
-  lastname: Yup.mixed().nullable().required("This field is required"),
-  email: Yup.string().email('Invalid email address').required('This field is requied')
-    .test(
-      'valid-email-at',
-      'Email must contain "@"',
-      (value) => {
-        if (value) {
-          return value.includes('@');
-        }
-        return false;
-      }
-    )
-    .test(
-      'valid-email-com',
-      'Email must end with ".com"',
-      (value) => {
-        if (value) {
-          return value.endsWith('.com');
-        }
-        return false;
-      }
-    ),
-  phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').required("This field is required"),
+  username: Yup.mixed().nullable().required("This field is required"),
+  email: Yup.string().matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email format').required('Email is required'),
+  phone: Yup.string().matches(/^\d+$/, 'Enter numbers only'),
   password: Yup.string()
     .min(8, "Password must be 8 characters at minimum")
     .required("password is Required"),
@@ -131,8 +109,7 @@ const SignupForm = ({ handleRegister, authorizing }: SignupFormProps) => {
   const togglePassword = () => showPassword(!passwordView);
 
   const [initialValue, setInitialValue] = React.useState({
-    firstname: "",
-    lastname: "",
+    username: "",
     email: "",
     phone: "",
     password: "",
@@ -154,43 +131,29 @@ const SignupForm = ({ handleRegister, authorizing }: SignupFormProps) => {
         // let response;
         setSubmitting(false);
         handleRegister(values);
-        resetForm();
-        toast.success("User Added Successfull")
       }
     })
 
   return (
     <div className='auth-signupbody'>
       <form className='' autoComplete='off' onSubmit={handleSubmit}>
-        <p className=''>PLEASE REGISTER HERE</p>
+        <p className="">Quick Book</p>
+
+        <h6 className="mb-2 font-bold">REGISTRATION</h6>
+
         <div className='auth-signupform'>
-          <div className='row'>
-            <div className='form-group col-lg-6'>
-              <label htmlFor="" className='mr-4 label'>
-                First Name:
-              </label>
-              <input
-                name='firstname'
-                className='form-control'
-                value={values.firstname}
-                onChange={handleChange}
-                required
-              />
-              <FormikValidationError name='firstname' errors={errors} touched={touched} />
-            </div>
-            <div className='form-group col-lg-6'>
-              <label htmlFor="" className='mr-4 label'>
-                Last Name:
-              </label>
-              <input
-                name='lastname'
-                className='form-control'
-                value={values.lastname}
-                onChange={handleChange}
-                required
-              />
-              <FormikValidationError name='lastname' errors={errors} touched={touched} />
-            </div>
+          <div className='form-group'>
+            <label htmlFor="" className='mr-4 label'>
+              Username
+            </label>
+            <input
+              name='username'
+              className='form-control'
+              value={values.username}
+              onChange={handleChange}
+              required
+            />
+            <FormikValidationError name='username' errors={errors} touched={touched} />
           </div>
           <div className='form-group '>
             <label htmlFor="" className='mr-4 label'>
@@ -266,8 +229,8 @@ const SignupForm = ({ handleRegister, authorizing }: SignupFormProps) => {
         </div>
       </form>
       <div className="auth-signup">
-        <p className="">Already have an account?
-          <Link to="/login">Login</Link>
+        <p className="">Already have an account? &nbsp;
+          <Link to="/login">LOGIN</Link>
         </p>
       </div>
     </div>

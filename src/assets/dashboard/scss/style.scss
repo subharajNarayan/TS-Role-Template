@@ -6,12 +6,12 @@ $enable-rtl: true;
 
 // Import CoreUI for React components library
 // @import "@coreui/coreui/scss/coreui";
-@import "../../../../node_modules/@coreui/coreui/scss/coreui";
+// @import "../../../../node_modules/@coreui/coreui/scss/coreui";
 
 
 
 // Import Chart.js custom tooltips styles
-@import "../../../../node_modules/@coreui/chartjs/scss/coreui-chartjs";
+// @import "../../../../node_modules/@coreui/chartjs/scss/coreui-chartjs";
 
 @import "./layout";
 @import "./example";
