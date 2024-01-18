@@ -4,9 +4,13 @@ import { useFormik } from 'formik';
 import { taskInitialValues, taskValidationSchema } from './schema';
 import Button from '../../../../components/UI/Forms/Buttons';
 import { ConnectedProps, connect } from 'react-redux';
+import { postTaskLogsAction } from '../../../../store/modules/Task/postTaskLogs';
+import { toast } from 'react-toastify';
+import { getTaskLogsAction } from '../../../../store/modules/Task/getTaskLogs';
 
 interface Props extends PropsFromRedux{
-
+  editData: any,
+  setEditData: any,
 }
 
 const Form = (props: Props) => {
@@ -29,7 +33,21 @@ const Form = (props: Props) => {
     onSubmit: async (submitValue, { resetForm }) => {
       let res;
       console.log(submitValue);
+
+      res = await props.postTaskLogsAction({
+        ...submitValue,
+      })
+
+      if (res.status === 200 || res.status === 201) {
+        setInitialData(taskInitialValues);
+        resetForm();
+        props.getTaskLogsAction();
+        toast.success("Data posted successful")
+      }else{
+        toast.error("Data posted failed")
+      }
     }
+
   })
   return (
     <div className='Task-form'>
@@ -121,7 +139,8 @@ const mapStateToProps = () => ({
 })
 
 const mapDispatchToProps = {
-  
+  getTaskLogsAction,
+  postTaskLogsAction,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

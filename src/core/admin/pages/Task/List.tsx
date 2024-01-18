@@ -3,22 +3,40 @@ import { ConnectedProps, connect, useDispatch, useSelector } from 'react-redux';
 import { Table } from 'reactstrap';
 import { DeleteIcon, EditIconDark } from '../../../../assets/images/xd';
 import { getTaskLogsAction } from '../../../../store/modules/Task/getTaskLogs';
-import { Dispatch } from 'redux';
+// import { Dispatch } from 'redux';
 import { RootState } from '../../../../store/root-reducer';
+import useDeleteConfirmation from '../../../../hooks/useDeleteConfirmation';
+import ConfirmationModal from '../../../../components/UI/ConfirmationModal';
+import { deleteTaskLogsAction } from '../../../../store/modules/Task/deleteTaskLogs';
+import { toast } from 'react-toastify';
 
 interface Props extends PropsFromRedux {
-
+  setEditData: any;
 }
 
 const List = (props: Props) => {
 
+  const { modal, editId, toggleModal, handleDeleteClick, resetDeleteData } = useDeleteConfirmation();
+
   React.useEffect(() => {
     props.getTaskLogsAction();
-  },[])
+  }, [])
 
   const TaskDetails = useSelector((state: RootState) => state.TaskData.getFormLogs.data);
-console.log({TaskDetails});
+  console.log({ TaskDetails });
 
+  const handleTaskAction = async() => {
+    const res = await props.deleteTaskLogsAction(editId);
+
+    if(res.status === 200 || res.status === 201){
+      toggleModal();
+      resetDeleteData();
+      props.getTaskLogsAction();
+      toast.success("Task Deleted Successfully")
+    }else{
+      toast.error("Task Delete Failed")
+    }
+  }
 
   return (
     <div className='task-list container-fluid'>
@@ -47,18 +65,21 @@ console.log({TaskDetails});
                 <td>{item.address}</td>
                 <td>{item.assigned_user_name}</td>
                 <td className='action d-flex'>
-                <div role='button' className="mr-1">
-                  <img src={EditIconDark} alt="edit" />
-                </div>
-                <div role='button' className="mr-0">
-                  <img src={DeleteIcon} alt="delete" />
-                </div>
-              </td>
+                  <div role='button' className="mr-1">
+                    <img src={EditIconDark} alt="edit" onClick={() => props.setEditData(item)} />
+                  </div>
+                  <div role='button' className="mr-0">
+                    <img src={DeleteIcon} alt="delete" onClick={() => handleDeleteClick(item.id)}/>
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </div>
+      <ConfirmationModal open={modal}
+        handleModal={() => toggleModal()}
+        handleConfirmClick={() => handleTaskAction()} />
     </div>
   )
 }
@@ -68,9 +89,9 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = {
-  getTaskLogsAction
+  getTaskLogsAction,
+  deleteTaskLogsAction,
 }
-
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

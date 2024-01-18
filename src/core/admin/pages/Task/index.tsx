@@ -8,15 +8,19 @@ interface Props {
 }
 
 const index = (props: Props) => {
+
+  const [editData, setEditData] = React.useState<any>();
+  console.log({ editData });
+
   return (
     <div className='container py-3'>
       <GeneralCard title={"Tasks"}>
         <div className="row">
           <div className="col-lg-12">
-            <Form />
+            <Form editData={editData} setEditData={setEditData}/>
           </div>
           <div className="col-lg-12">
-            <List />
+            <List setEditData={setEditData}/>
           </div>
         </div>
       </GeneralCard>
@@ -24,4 +28,4 @@ const index = (props: Props) => {
   )
 }
 
-export default index
+export default index;

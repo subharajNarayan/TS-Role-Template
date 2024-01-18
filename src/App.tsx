@@ -68,7 +68,7 @@ function App() {
 
 
   function roleDashboard(role:null|string=null) {
-    console.log({role});
+    // console.log({role});
     
     switch(role?.toUpperCase()) {
       case 'ADMIN' : return <AdminDashboard children={[]}></AdminDashboard>
