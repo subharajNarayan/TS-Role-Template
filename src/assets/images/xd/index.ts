@@ -28,6 +28,9 @@ import Previous from './Previous.svg'
 import Next from './Next.svg'
 import Checkbox from './Checkbox.svg'
 import Carousel from './Carousel.svg'
+import ComponentIcon from './Component.svg'
+import Home from './Home.svg'
+import StudentIcon from './StudentIcon.svg'
 
 export {
     HomeIcon,
@@ -59,5 +62,8 @@ export {
     Previous,
     Next,
     Checkbox,
-    Carousel
+    Carousel,
+    ComponentIcon,
+    Home,
+    StudentIcon
 }

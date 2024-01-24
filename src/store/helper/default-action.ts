@@ -1,4 +1,4 @@
-import Axios, { AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse, CancelTokenSource, Method } from 'axios';
+import Axios, { AxiosRequestConfig, AxiosRequestHeaders, CancelTokenSource, Method } from 'axios';
 import initDispatchTypes from './default-action-type';
 import initApiRequest from '../../services/api-request/api-request';
 import { apiDetailType } from '../ActionNames';

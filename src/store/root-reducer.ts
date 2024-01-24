@@ -6,6 +6,7 @@ import userDetails from "./modules/userDetails"
 import outhReducer from "./modules/oauthservices";
 import registerReducer from "./modules/register/register";
 import TaskData from "./modules/Task";
+import StudentData from "./modules/Student";
 
 export const appReducer = combineReducers({
     i18nextData: i18nextReducer,
@@ -14,6 +15,7 @@ export const appReducer = combineReducers({
     outhService:outhReducer,
     userDetails,
     TaskData,
+    StudentData,
 });
 
 export type RootState = ReturnType<typeof appReducer>;

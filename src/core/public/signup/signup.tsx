@@ -10,6 +10,8 @@ import { useNavigate, Link } from "react-router-dom";
 import toast from "../../../components/Notifier/Notifier";
 import { userRegister } from '../../../store/modules/register/register';
 import { addUserDetails } from "../../../store/modules/userDetails";
+import { Box, Grid, TextField } from '@mui/material';
+import MUIButton from '../../../components/Material-UI/Buttons';
 
 
 interface Props extends PropsFromRedux { }
@@ -87,7 +89,7 @@ interface SignupFormProps {
 }
 
 
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+// const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const signupValidationSchema = Yup.object().shape({
   username: Yup.mixed().nullable().required("This field is required"),
@@ -98,7 +100,6 @@ const signupValidationSchema = Yup.object().shape({
     .required("password is Required"),
   password2: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Password does not match')
-    .required("This field is required"),
 
 })
 
@@ -136,7 +137,7 @@ const SignupForm = ({ handleRegister, authorizing }: SignupFormProps) => {
 
   return (
     <div className='auth-signupbody'>
-      <form className='' autoComplete='off' onSubmit={handleSubmit}>
+      {/* <form className='' autoComplete='off' onSubmit={handleSubmit}>
         <p className="">Quick Book</p>
 
         <h6 className="mb-2 font-bold">REGISTRATION</h6>
@@ -227,12 +228,96 @@ const SignupForm = ({ handleRegister, authorizing }: SignupFormProps) => {
             />
           </div>
         </div>
-      </form>
-      <div className="auth-signup">
+      </form> */}
+      <Box className="material-ui">
+        <Box component="form" noValidate autoComplete="off"
+          onSubmit={handleSubmit}>
+          <p className="">Quick Book</p>
+          <h6 className="mb-2 font-bold">CONFIGURATIONS</h6>
+          <div className="username">
+            <TextField
+              name="username"
+              label="Username"
+              value={values.username}
+              onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+            />
+            <FormikValidationError name="username" errors={errors} touched={touched} />
+          </div>
+          <div className="phone">
+            <TextField
+              name="phone"
+              label="phone"
+              value={values.phone}
+              onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+            />
+            <FormikValidationError name="phone" errors={errors} touched={touched} />
+          </div>
+          <div className="email">
+            <TextField
+              name="email"
+              label="email"
+              value={values.email}
+              onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+            />
+            <FormikValidationError name="email" errors={errors} touched={touched} />
+          </div>
+          <div className="password">
+            <TextField
+              name="password"
+              label="Password"
+              value={values.password}
+              onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+              type="password"
+            />
+            <FormikValidationError name="password" errors={errors} touched={touched} />
+          </div>
+          <div className="password2">
+            <TextField
+              name="password2"
+              label="Password2"
+              value={values.password2}
+              onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+              type="password2"
+            />
+            <FormikValidationError name="password2" errors={errors} touched={touched} />
+          </div>
+          <MUIButton
+            type="submit"
+            text={"Login"}
+            fullWidth
+            variant="contained"
+            loading={authorizing}
+            disabled={authorizing}
+          />
+        </Box>
+        <Grid container className="mt-2">
+          <Grid item>
+            <Link to={"/login"} >
+              {"Already have an account? SignIn"}
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
+      {/* <div className="auth-signup">
         <p className="">Already have an account? &nbsp;
           <Link to="/login">LOGIN</Link>
         </p>
-      </div>
+      </div> */}
     </div>
   )
 }

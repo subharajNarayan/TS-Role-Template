@@ -1,4 +1,4 @@
-import Button from "../../../components/UI/Forms/Buttons";
+// import Button from "../../../components/UI/Forms/Buttons";
 import { useFormik } from "formik";
 import React, { ReactElement, useCallback, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -10,8 +10,14 @@ import { object as YupObject, string as YupString } from "yup";
 import '../login/login.scss';
 import '../authSocial/social.scss';
 import toast from "../../../components/Notifier/Notifier";
-// import TokenService from "../../../services/jwt-token/jwt-token";
 import FormikValidationError from "../../../components/React/FormikValidationError/FormikValidationError";
+import MUIButton from "../../../components/Material-UI/Buttons";
+import Box from "@mui/material/Box";
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 
 interface Props extends PropsFromRedux { }
 export interface UserCredentials {
@@ -118,10 +124,15 @@ const LoginForm = ({ authorizing, handleLogin }: LoginFormProps) => {
 
   // const history = useNavigate();
 
+  const [viewPassword, setViewPassword] = useState(false);
+
+  const handleTogglePasswordVisibility = () => {
+    setViewPassword((prevViewPassword) => !prevViewPassword);
+  };
+
   return (
     <div className="auth-body">
-      <form className="" onSubmit={handleSubmit} autoComplete="off">
-        {/* <h5 className="mb-2 font-bold">Water</h5> */}
+      {/* <form className="" onSubmit={handleSubmit} autoComplete="off">
         <p className="">Quick Book</p>
 
         <h6 className="mb-2 font-bold">CONFIGURATIONS</h6>
@@ -172,12 +183,78 @@ const LoginForm = ({ authorizing, handleLogin }: LoginFormProps) => {
             />
           </div>
         </div>
-      </form>
-      <div className="auth-signup">
+      </form> */}
+      {/* <div className="auth-signup">
         <p className="align-vertical">Dont't have an account? &nbsp;
           <Link to="/signup">SIGN UP</Link>
         </p>
-      </div>
+      </div> */}
+      <Box className="material-ui">
+        <Box component="form" noValidate autoComplete="off"
+          onSubmit={handleSubmit}>
+          <p className="">Quick Book</p>
+          <h6 className="mb-2 font-bold">CONFIGURATIONS</h6>
+          <div className="username">
+            <TextField
+              name="username"
+              label="Username"
+              value={values.username}
+              onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+            />
+            <FormikValidationError name="username" errors={errors} touched={touched} />
+          </div>
+          <div className="password">
+            {/* <TextField
+              name="password"
+              label="Password"
+              value={values.password}
+              onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+              type="password"
+            /> */}
+            <TextField
+            name="password"
+            label="Password"
+            value={values.password}
+            onChange={handleChange}
+            margin="normal"
+            required
+            fullWidth
+            type={viewPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                    {viewPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+            <FormikValidationError name="password" errors={errors} touched={touched} />
+          </div>
+          <MUIButton
+            type="submit"
+            text={"Login"}
+            fullWidth
+            variant="contained"
+            loading={authorizing}
+            disabled={authorizing}
+          />
+        </Box>
+        <Grid container className="mt-2">
+          <Grid item>
+            <Link to={"/signup"}  >
+              {"Don't have an account? Sign Up"}
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
     </div>
   );
 };

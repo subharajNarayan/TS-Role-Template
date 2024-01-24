@@ -6,6 +6,7 @@ const Signup = lazy(() => import("../core/public/signup/signup"))
 
 // PROTECTED
 const ProtectedHome = lazy(() => import("../core/protected/pages/Home/Home"));
+const ProtectedStudent = lazy(() => import("../core/protected/pages/Student"));
 
 // ADMIN
 // const AdminHome = lazy(() => import("../core/public/Home/Home"))
@@ -29,6 +30,11 @@ const appRoutes: CustomRoute[] = [
         path: "/auth/home",
         component: ProtectedHome,
         type: "authorized",
+    },
+    {
+        path: "/auth/student",
+        component: ProtectedStudent,
+        type: "authorized"
     },
 
     // ADMIN PANEL

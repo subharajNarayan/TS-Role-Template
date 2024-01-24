@@ -1,0 +1,24 @@
+.auth{
+  &-wrapper{
+
+  }
+  &-body{
+    .material-ui{
+      form{
+        .MuiFormControl-marginNormal{
+          margin-bottom: 0px;
+          // label{
+          //   font-size: 14px;
+          //   top: -4px !important;
+          // }
+          // .MuiInputBase-root{
+          //   input{
+          //     padding: 10px 14px;
+          //     height: 1.4375em;
+          //   }
+          // }
+        }
+      }
+    }
+  }
+}

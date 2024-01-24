@@ -4,9 +4,13 @@ import { useFormik } from 'formik';
 import { taskInitialValues, taskValidationSchema } from './schema';
 import Button from '../../../../components/UI/Forms/Buttons';
 import { ConnectedProps, connect } from 'react-redux';
+import { postTaskLogsAction } from '../../../../store/modules/Task/postTaskLogs';
+import { toast } from 'react-toastify';
+import { getTaskLogsAction } from '../../../../store/modules/Task/getTaskLogs';
 
 interface Props extends PropsFromRedux{
-
+  editData: any,
+  setEditData: any,
 }
 
 const Form = (props: Props) => {
@@ -29,14 +33,28 @@ const Form = (props: Props) => {
     onSubmit: async (submitValue, { resetForm }) => {
       let res;
       console.log(submitValue);
+
+      res = await props.postTaskLogsAction({
+        ...submitValue,
+      })
+
+      if (res.status === 200 || res.status === 201) {
+        setInitialData(taskInitialValues);
+        resetForm();
+        props.getTaskLogsAction();
+        toast.success("Data posted successful")
+      }else{
+        toast.error("Data posted failed")
+      }
     }
+
   })
   return (
     <div className='Task-form'>
       <form action="" onSubmit={(e) => {
         e.preventDefault();
         handleSubmit(e);
-      }}>
+      }} autoComplete='off'>
         <div className="row">
           <div className='form-group col-lg-3'>
             <label htmlFor="">Title</label>
@@ -46,6 +64,7 @@ const Form = (props: Props) => {
               value={values.title}
               onChange={handleChange}
               onBlur={handleBlur}
+
             />
             <FormikValidationError name='title' errors={errors} touched={touched} />
           </div>
@@ -57,6 +76,7 @@ const Form = (props: Props) => {
               value={values.description}
               onChange={handleChange}
               onBlur={handleBlur}
+
             >
             </textarea>
             <FormikValidationError name='description' errors={errors} touched={touched} />
@@ -70,6 +90,7 @@ const Form = (props: Props) => {
               value={values.start_date}
               onChange={handleChange}
               onBlur={handleBlur}
+
             />
           </div>
           <div className='form-group col-lg-3'>
@@ -81,6 +102,7 @@ const Form = (props: Props) => {
               value={values.end_date}
               onChange={handleChange}
               onBlur={handleBlur}
+
             />
           </div>
           <div className='form-group col-lg-3'>
@@ -91,6 +113,7 @@ const Form = (props: Props) => {
               value={values.assigned_user_name}
               onChange={handleChange}
               onBlur={handleBlur}
+
             />
           </div>
           <div className='form-group col-lg-3'>
@@ -101,6 +124,7 @@ const Form = (props: Props) => {
               value={values.address}
               onChange={handleChange}
               onBlur={handleBlur}
+
             />
             <FormikValidationError name='address' errors={errors} touched={touched} />
           </div>
@@ -121,7 +145,8 @@ const mapStateToProps = () => ({
 })
 
 const mapDispatchToProps = {
-  
+  getTaskLogsAction,
+  postTaskLogsAction,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

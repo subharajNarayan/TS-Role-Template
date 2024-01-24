@@ -13,6 +13,7 @@
                     .list {
                         &-sidebar {
                             a {
+                                padding: 0.5rem 1rem;
                                 // color: lighten($value, 10);
                                 color: rgba(44, 56, 74, 0.95);
                                 &.active {
@@ -141,24 +142,32 @@
     }
 }
 
+.app.toggled {
+    --sidebar-width: 60px; // Set your desired toggled sidebar width
+    // ... rest of the code ...
+  }
 .app {
-    width: 100%;
+    // width: 100%;
+    --sidebar-width: 250px;
     background-color: $blue-100;
     // padding-left: var(--sidebar-width) ;
     // @include media-breakpoint-down(md){
     //   padding-left: 0;
     // }
     main {
+        position: relative;
         width: calc(100% - var(--sidebar-width));
         top: 0;
         left: 0;
         transform: translateX(var(--sidebar-width));
         // overflow-y: auto;
-        transition: padding $time-func-1 0.25s, transform $time-func-1 0.25s, width $time-func-1 0.25s;
+        // transition: padding $time-func-1 0.25s, transform $time-func-1 0.25s, width $time-func-1 0.25s;
+        // transition: transform 0.3s ease;
         @include media-breakpoint-down(lg) {
             transform: translateX(0);
             width: 100%;
         }
+        
         &.stickyHeader {
             display: flex;
             flex-direction: column;
@@ -204,14 +213,14 @@
         //   padding-left: var(--sidebar-width);
         // }
         .sidebar {
-            transform: translateX(calc(-1 * var(--sidebar-width)));
+            // transform: translateX(calc(-1 * var(--sidebar-width)));
             @include media-breakpoint-down(md) {
                 transform: translateX(0);
             }
         }
         main {
-            width: 100%;
-            transform: translateX(0);
+            // width: 100%;
+            // transform: translateX(0);
             @include media-breakpoint-down(md) {
                 // transform: translateX(var(--sidebar-width));
                 width: 100%;
